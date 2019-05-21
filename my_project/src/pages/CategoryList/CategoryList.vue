@@ -2,53 +2,14 @@
   <div class="categoryList-container">
     <div class="searchInput">
       <i class="iconfont iconsousuo"></i>
-      <span class="placeholder">搜索商品，共xxxxx款好物</span>
+      <span class="placeholder" @click="$router.push('/search')">搜索商品，共xxxxx款好物</span>
     </div>
     <section class="categoryList-main">
       <div class="line"></div>
       <div class="categoryList-left">
         <ul>
-          <li>
-            <rooter-link>推荐专区</rooter-link>
-          </li>
-          <li>
-            <rooter-link>冬季专区</rooter-link>
-          </li>
-          <li>
-            <rooter-link>爆品专区</rooter-link>
-          </li>
-          <li>
-            <rooter-link>新品专区</rooter-link>
-          </li>
-          <li>
-            <rooter-link>居家</rooter-link>
-          </li>
-          <li>
-            <rooter-link>鞋包配饰</rooter-link>
-          </li>
-          <li>
-            <rooter-link>服装</rooter-link>
-          </li>
-          <li>
-            <rooter-link>电器</rooter-link>
-          </li>
-          <li>
-            <rooter-link>洗护</rooter-link>
-          </li>
-          <li>
-            <rooter-link>饮食</rooter-link>
-          </li>
-          <li>
-            <rooter-link>餐厨</rooter-link>
-          </li>
-          <li>
-            <rooter-link>婴童</rooter-link>
-          </li>
-          <li>
-            <rooter-link>文体</rooter-link>
-          </li>
-          <li>
-            <rooter-link>特色区</rooter-link>
+          <li :class="{active: currentId * 1===category.id}" v-for="(category,index) in categoryList" :key="index">
+            <router-link :to="{path:'category',query:{id:category.id} }">{{category.name}}</router-link>
           </li>
         </ul>
       </div>
@@ -58,8 +19,29 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import {mapState} from 'vuex'
+  import BScroll from 'better-scroll'
   export default {
-
+    data(){
+      return{
+        isActive: true,
+        currentId:''
+      }
+    },
+    computed:{
+      ...mapState({
+        categoryList:state=>state.categoryList.categoryList
+      })
+    },
+    mounted(){
+      this.$store.dispatch('getCategoryList');
+      this.$nextTick(() => {
+        /* eslint-disable no-new */
+        new BScroll('.categoryList-left', {
+          click: true
+        })
+      })
+    },
   }
 </script>
 
@@ -110,6 +92,4 @@
               border-left 6px solid $red
               a
                 color $red
-
-
 </style>

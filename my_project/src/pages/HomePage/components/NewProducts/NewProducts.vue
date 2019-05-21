@@ -10,26 +10,27 @@
       </span>
     </div>
     <ul class="products-list">
-      <li >
+      <li v-for="(item,index) in getNewItem" :key="index">
+        <img :src="item.listPicUrl" alt="新品首发">
         <div class="good-name">
-          <span>英姿飒爽</span>
-          <span class="good-price">￥366</span>
+          <span>{{item.name}}</span>
+          <span class="good-price">￥{{item.counterPrice}}</span>
         </div>
       </li>
     </ul>
   </section>
 </template>
 <script>
-//  import {mapState} from 'vuex';
+  import {mapState} from 'vuex';
   export default {
-//    computed: {
-//      ...mapState({
-//        newItem: state => state.home.newItem
-//      }),
-//      getNewItem () {
-//        return [...this.newItem].splice(0, 6);
-//      }
-//    }
+    computed: {
+      ...mapState({
+        newItem: state => state.homepage.newItem
+      }),
+      getNewItem () {
+        return [...this.newItem].splice(0, 6);
+      }
+    }
   }
 </script>
 <style lang="stylus" rel="stylesheet/stylus" scoped>

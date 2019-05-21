@@ -4,23 +4,46 @@ import HomePage from '@/pages/HomePage/HomePage.vue'
 import Profile from '@/pages/Profile/Profile.vue'
 import Search from '@/pages/Search/Search.vue'
 import Shopcart from '@/pages/Shopcart/Shopcart.vue'
+import Category from '../pages/CategoryList/Category/Category.vue';
 
 export default [
   {
     path:'/homepage',
-    component:HomePage
-  },
-  {
-    path:'/categorylist',
-    component:CategoryList
+    component:HomePage,
+    meta: {
+      isShow: true
+    }
   },
   {
     path:'/search',
     component:Search
   },
   {
+    path:'/categorylist',
+    component:CategoryList,
+    meta:{
+      isShow:true
+    },
+    children:[
+      {
+        path: '/categorylist/category',
+        component: Category,
+        meta: {
+          isShow: true
+        }
+      },
+      {
+        path:'',
+        redirect:'/categorylist/category'
+      }
+    ]
+  },
+  {
     path:'/shopcart',
-    component:Shopcart
+    component:Shopcart,
+    meta: {
+      isShow: true
+    }
   },
   {
     path:'/profile',

@@ -9,26 +9,26 @@
     </div>
     <div class="rec-list">
       <div class="reco-list-top">
-        <img src="javascript:;" alt="">
+        <img :src="popularItem[0].listPicUrl" alt="好物推荐">
         <div class="good-info">
-          <span>APP优惠</span>
-          <p>苏暖磨毛四件套</p>
-          <p>厚实粗犷，睡舒服</p>
-          <p>￥399</p>
+          <span v-if="isShow">APP优惠</span>
+          <p class="ellipsis">{{popularItem[0].name}}</p>
+          <p class="ellipsis">{{popularItem[0].simpleDesc}}</p>
+          <p>￥{{popularItem[0].counterPrice}}</p>
         </div>
       </div>
       <ul class="reco-list-bottom">
-        <li>
-          <img src="item.listPicUrl" alt="">
+        <li v-for="(item,index) in getPopularItem" :key="index">
+          <img :src="item.listPicUrl" alt="商品图">
           <div class="good-name">
-            <span>古风依木然抽</span>
-            <span class="good-price">￥75</span>
+            <span>{{item.name}}</span>
+            <span class="good-price">￥{{item.counterPrice}}</span>
           </div>
-          <div class="good-advantage">
+          <div class="good-advantage" v-if="false">
             <span>爆品</span>
             <span>限时购</span>
           </div>
-          <div class="good-full-reduction">
+          <div class="good-full-reduction" v-if="false">
             <div>
               <span class="half-circle"></span>
               <span>每满99减10券</span>
@@ -42,8 +42,21 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import {mapState} from 'vuex'
   export default {
-    name: ""
+    data(){
+      return{
+        isShow:true
+      }
+    },
+    computed:{
+      ...mapState({
+        popularItem:state=>state.homepage.popularItem
+      }),
+      getPopularItem () {
+        return [...this.popularItem].splice(1, 4);
+      }
+    }
   }
 </script>
 

@@ -10,26 +10,25 @@
     <div class="search-list">
       <p>热门搜索</p>
       <ul>
-        <li >
-          <a href="javascript:void(0);">搜索</a>
+        <li :class="{highlight: keywords.highlight === 1}" v-for="(keywords, index) in initSearchData.hotKeywordVOList" :key="index">
+          <a href="javascript:void(0);">{{keywords.keyword}}</a>
         </li>
       </ul>
     </div>
   </section>
 </template>
 <script>
-  export default {}
-//  import {mapState} from 'vuex';
-//  export default {
-//    mounted () {
-//      this.$store.dispatch('getInitSearch');
-//    },
-//    computed: {
-//      ...mapState({
-//        initSearchData: state => state.search.initSearchData
-//      })
-//    }
-//  }
+  import {mapState} from 'vuex';
+  export default {
+    mounted () {
+      this.$store.dispatch('getInitSearch');
+    },
+    computed: {
+      ...mapState({
+        initSearchData: state => state.search.initSearchData
+      })
+    }
+  }
 </script>
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   @import "../../common/stylus/mixins.styl";

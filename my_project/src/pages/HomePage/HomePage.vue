@@ -62,6 +62,9 @@
       FlashSale,
       NewProducts,
       Classify
+    },
+    mounted(){
+      this.$store.dispatch('getHomeData')
     }
 
 
